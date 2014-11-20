@@ -2,6 +2,10 @@
   "manifest_version": 2,
   "name": "Weasyl Enhancer",
   "version": "1.0",
+  "icons": {
+	"128": "icon.png",
+	"48": "icon48.png"
+  },
   "description": "Small tweaks to the Weasyl browsing experience",
   "content_scripts": [
 	{
