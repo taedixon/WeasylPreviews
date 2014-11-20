@@ -1,11 +1,8 @@
+/***************************
+	PREVIEW_THUMBS
+***************************/
+
 var thumbfigs = document.getElementsByClassName("thumbnail");
-var style = document.createElement("STYLE");
-style.innerHTML = ".previewNox{width:300px;position:fixed;border-radius:10px;padding:5px;" +
-	"background-color:#D6D6D6;border:2px dashed #A0A0A0;top:20px;left:20px;overflow:hidden;visibility:hidden}\n" +
-	".previewAvatar{float:left;text-align:center;background-color:#9AA9AA;" + 
-	"margin:4px;padding:4px;border:1px solid #222;border-radius:4px;}\n"  +
-	".previewNox .tags a {padding:0 0.5em;height:1.4rem;line-height:1.4rem;color:#336979;}"
-document.head.appendChild(style);
 
 function loadPreview(sub_id, floater, thumb) {
 	if (sub_id) {
