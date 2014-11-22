@@ -29,5 +29,5 @@ if (art_view) {
 	
 	var detail_actions = document.getElementById("detail-actions");
 	detail_actions.appendChild(resize_btn);
-		
+	
 }

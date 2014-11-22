@@ -1,8 +1,7 @@
 /***************************
 	PREVIEW_THUMBS
-	+ CHROME
+	+ FIREFOX
 ***************************/
-
 var thumbfigs = document.getElementsByClassName("thumbnail");
 
 function loadPreview(sub_id, floater, thumb) {
@@ -26,9 +25,10 @@ function loadPreview(sub_id, floater, thumb) {
 				taglinks += "<a>" + response.tags[tagnum] + "</a>";
 			}
 			
-			floater.innerHTML = "<div class='previewAvatar'><img src='" 
+			var htmlcontent = "<div class='previewAvatar'><img src='" 
 			+ response.owner_media.avatar[0].url + "'><br><strong>" + response.owner + "</strong></div>"
 				+ desco + "<br><div class='tags'>" + taglinks + "</div>";
+			floater.innerHTML = htmlcontent;
 		});
 		
 		thumb.getElementsByTagName("A")[0].getElementsByTagName("IMG")[0].setAttribute("title", "");
@@ -57,7 +57,6 @@ Array.prototype.forEach.call(thumbfigs, function(elem, index, arr) {
 	document.body.appendChild(floater);
 	
 	thumb.addEventListener("mouseover", function(event) {
-	
 		if (!thumb.loaded) {
 			thumb.preview_timeout = setTimeout(function() 
 				{loadPreview(sub_id, floater, thumb); thumb.loaded = true;}, 1000);
@@ -81,11 +80,11 @@ Array.prototype.forEach.call(thumbfigs, function(elem, index, arr) {
 	});
 	
 	thumb.addEventListener("mousemove", function(event) {
-		floater.style.top = event.y + "px";
-		if (event.x < (window.innerWidth - 320)) {
-			floater.style.left = event.x + 40 + "px";
+		floater.style.top = event.clientY + "px";
+		if (event.clientX < (window.innerWidth - 320)) {
+			floater.style.left = event.clientX + 40 + "px";
 		} else {
-			floater.style.left = (event.x - 340) + "px";
+			floater.style.left = (event.clientX - 340) + "px";
 		}
 	});
 });
