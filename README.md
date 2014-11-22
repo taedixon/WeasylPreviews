@@ -9,5 +9,15 @@ submission's description and tags.
 and a button has been added to allow you to expand and un-expand it.
 
 
-Released under Apache License 2.0 (Apache-2.0)
-https://tldrlegal.com/license/apache-license-2.0-%28apache-2.0%29#fulltext
+Released under MIT License http://opensource.org/licenses/MIT
+
+Changelog:
+V1.2
+- First firefox version
+- Added a message to specify journals not being previewable (previously just said "cant show characters" for all)
+
+V1.1
+- Added z-index property to previews so they dont go under stuff
+
+V1.0
+- Initial release
