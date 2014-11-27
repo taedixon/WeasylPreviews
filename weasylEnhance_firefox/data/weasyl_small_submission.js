@@ -5,7 +5,7 @@ function expandImage() {
 	var art_view = document.getElementById("detail-art");
 	var bttn = document.getElementById("expandButton");
 	var img = art_view.getElementsByTagName("A")[0].getElementsByTagName("IMG")[0];
-	if (bttn.innerHTML.contains("+")) {
+	if (bttn.innerHTML.indexOf("+") >= 0) {
 		img.style.maxHeight = "";
 		bttn.innerHTML = "(-) Inpand";
 	} else {
