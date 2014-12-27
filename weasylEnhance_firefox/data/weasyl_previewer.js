@@ -20,26 +20,52 @@ function loadPreview(sub_id, floater, thumb) {
 				}
 			}
 			
+			//not ideal but they won't let me just throw the contents in as HTML
+			//so this breaks it down to plaintext.
+			desco = desco.replace(/<\/p>/g, " ");
+			desco = desco.replace(/<br>/g, " ");
+			desco = desco.replace(/<[^>]*>/g, "");
+						
 			var taglinks = ""
 			for (tagnum in response.tags) {
 				taglinks += "<a>" + response.tags[tagnum] + "</a>";
 			}
 			
-			var htmlcontent = "<div class='previewAvatar'><img src='" 
-			+ response.owner_media.avatar[0].url + "'><br><strong>" + response.owner + "</strong></div>"
-				+ desco + "<br><div class='tags'>" + taglinks + "</div>";
-			floater.innerHTML = htmlcontent;
+			var previewDiv = document.createElement("DIV");
+			previewDiv.setAttribute("class", "previewAvatar");
+			
+			var previewAv = document.createElement("IMG");
+			previewAv.setAttribute("src", response.owner_media.avatar[0].url);
+			previewDiv.appendChild(previewAv);
+			previewDiv.appendChild(document.createElement("BR"));
+			
+			var previewOwnerName = document.createElement("STRONG");
+			previewOwnerName.appendChild(document.createTextNode(response.owner));
+			previewDiv.appendChild(previewOwnerName);
+			
+			floater.appendChild(previewDiv);
+			floater.appendChild(document.createTextNode(desco));
+			floater.appendChild(document.createElement("BR"));			
+			
+			var tagdiv = document.createElement("DIV");
+			tagdiv.setAttribute("class", "tags");
+			for (tagnum in response.tags) {
+				var taglink = document.createElement("A");
+				taglink.appendChild(document.createTextNode(response.tags[tagnum]));
+				tagdiv.appendChild(taglink);
+			}			
+			floater.appendChild(tagdiv);
 		});
 		
 		thumb.getElementsByTagName("A")[0].getElementsByTagName("IMG")[0].setAttribute("title", "");
 	} else {
 		var link = thumb.getElementsByTagName("A")[0].getAttribute("href");
 		if (/\/character\//.test(link)) {
-			floater.innerHTML = "Can't preview Character submissions at this time, sorry.";
+			floater.appendChild(document.createTextNode("Can't preview Character submissions at this time, sorry."));
 		} else if (/\/journal\//.test(link)) {
-			floater.innerHTML = "Can't preview Journals at this time, sorry.";
+			floater.appendChild(document.createTextNode("Can't preview Journals at this time, sorry."));
 		} else {
-			floater.innerHTML = "I don't know what this is but I can't preview it anyway.";
+			floater.appendChild(document.createTextNode("I don't know what this is but I can't preview it anyway."));
 		}
 	}
 	floater.style.visibility = "visible";
