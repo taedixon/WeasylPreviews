@@ -3,58 +3,81 @@
 	+ FIREFOX
 ***************************/
 var thumbfigs = document.getElementsByClassName("thumbnail");
+var prefs = self.options.prefs;
+var boxwidth = 300;
+var mousebuf = 40;
+if (prefs.prevImage) boxwidth = 330;
 
 function loadPreview(sub_id, floater, thumb) {
 	if (sub_id) {
 		jQuery.ajax({url:"/api/submissions/" + sub_id + "/view"}).done(function(response) {
 			var desco = response.description;
-				var split = desco.split(/\s+/);
+			//not ideal but they won't let me just throw the contents in as HTML
+			//so this chops out the HTML
+			desco = desco.replace(/<[^>]*>/g, " ");
+			
+			var split = desco.split(/\s+/);
 			if (split.length > 50) {
 				desco = "";
 				for (i in split) {
 					desco += split[i] + " ";
 					if (i >= 50) {
-						desco += "<em>[...]</em>";
+						desco += " [...]";
 						break;
 					}
 				}
 			}
 			
-			//not ideal but they won't let me just throw the contents in as HTML
-			//so this breaks it down to plaintext.
-			desco = desco.replace(/<\/p>/g, " ");
-			desco = desco.replace(/<br>/g, " ");
-			desco = desco.replace(/<[^>]*>/g, "");
 						
-			var taglinks = ""
-			for (tagnum in response.tags) {
-				taglinks += "<a>" + response.tags[tagnum] + "</a>";
+			if (prefs.prevImage) {
+				if (!response.media.cover) {
+					var noImgHead = document.createElement("H2");
+					noImgHead.appendChild(document.createTextNode("No image to preview"));
+					floater.appendChild(noImgHead);
+				} else {
+					var imgDiv = document.createElement("DIV");
+					imgDiv.setAttribute("class", "previewImgBox");
+					var helper = document.createElement("SPAN");
+					helper.setAttribute("class", "helper");
+					imgDiv.appendChild(helper);
+					var img = document.createElement("IMG");
+					img.setAttribute("class", "previewImg");
+					img.setAttribute("src", response.media.cover[0].url);
+					imgDiv.appendChild(img);
+					floater.appendChild(imgDiv);
+				}
 			}
 			
-			var previewDiv = document.createElement("DIV");
-			previewDiv.setAttribute("class", "previewAvatar");
+			if (prefs.prevUser) {
+				var previewDiv = document.createElement("DIV");
+				previewDiv.setAttribute("class", "previewAvatar");
+				
+				var previewAv = document.createElement("IMG");
+				previewAv.setAttribute("src", response.owner_media.avatar[0].url);
+				previewDiv.appendChild(previewAv);
+				previewDiv.appendChild(document.createElement("BR"));
+				
+				var previewOwnerName = document.createElement("STRONG");
+				previewOwnerName.appendChild(document.createTextNode(response.owner));
+				previewDiv.appendChild(previewOwnerName);
+				floater.appendChild(previewDiv);
+			}
 			
-			var previewAv = document.createElement("IMG");
-			previewAv.setAttribute("src", response.owner_media.avatar[0].url);
-			previewDiv.appendChild(previewAv);
-			previewDiv.appendChild(document.createElement("BR"));
+			if (prefs.prevDesc) {
+				floater.appendChild(document.createTextNode(desco));
+				floater.appendChild(document.createElement("BR"));			
+			}
 			
-			var previewOwnerName = document.createElement("STRONG");
-			previewOwnerName.appendChild(document.createTextNode(response.owner));
-			previewDiv.appendChild(previewOwnerName);
-			
-			floater.appendChild(previewDiv);
-			floater.appendChild(document.createTextNode(desco));
-			floater.appendChild(document.createElement("BR"));			
-			
-			var tagdiv = document.createElement("DIV");
-			tagdiv.setAttribute("class", "tags");
-			for (tagnum in response.tags) {
-				var taglink = document.createElement("A");
-				taglink.appendChild(document.createTextNode(response.tags[tagnum]));
-				tagdiv.appendChild(taglink);
-			}			
-			floater.appendChild(tagdiv);
+			if (prefs.prevTags) {
+				var tagdiv = document.createElement("DIV");
+				tagdiv.setAttribute("class", "tags");
+				for (tagnum in response.tags) {
+					var taglink = document.createElement("A");
+					taglink.appendChild(document.createTextNode(response.tags[tagnum]));
+					tagdiv.appendChild(taglink);
+				}			
+				floater.appendChild(tagdiv);
+			}
 		});
 		
 		thumb.getElementsByTagName("A")[0].getElementsByTagName("IMG")[0].setAttribute("title", "");
@@ -73,6 +96,7 @@ function loadPreview(sub_id, floater, thumb) {
 
 Array.prototype.forEach.call(thumbfigs, function(elem, index, arr) {
 	var thumb = elem.getElementsByClassName("thumb")[0];
+	if (!thumb) return;
 	var sub_id= thumb.getAttribute("data-id");
 	var floater = document.createElement("DIV");
 	
@@ -85,16 +109,9 @@ Array.prototype.forEach.call(thumbfigs, function(elem, index, arr) {
 	thumb.addEventListener("mouseover", function(event) {
 		if (!thumb.loaded) {
 			thumb.preview_timeout = setTimeout(function() 
-				{loadPreview(sub_id, floater, thumb); thumb.loaded = true;}, 1000);
+				{loadPreview(sub_id, floater, thumb); thumb.loaded = true;}, prefs.prevDelay);
 		} else {
-			floater.style.top = event.y + "px";
 			floater.style.visibility = "visible";
-			
-			if (event.x < (window.innerWidth - 320)) {
-				floater.style.left = event.x + 40 + "px";
-			} else {
-				floater.style.left = (event.x - 340) + "px";
-			}
 		}
 	});
 	
@@ -106,11 +123,11 @@ Array.prototype.forEach.call(thumbfigs, function(elem, index, arr) {
 	});
 	
 	thumb.addEventListener("mousemove", function(event) {
-		floater.style.top = event.clientY + "px";
-		if (event.clientX < (window.innerWidth - 320)) {
-			floater.style.left = event.clientX + 40 + "px";
+		floater.style.top = (event.clientY-120) + "px";
+		if (event.clientX < (window.innerWidth - boxwidth - mousebuf)) {
+			floater.style.left = event.clientX + mousebuf + "px";
 		} else {
-			floater.style.left = (event.clientX - 340) + "px";
+			floater.style.left = (event.clientX - boxwidth - mousebuf) + "px";
 		}
 	});
 });

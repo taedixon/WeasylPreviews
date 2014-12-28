@@ -5,5 +5,48 @@
   "description": "Small tweaks to the Weasyl browsing experience",
   "author": "Taeler Dixon",
   "license": "MIT",
-  "version": "1.4"
+  "version": "1.4",
+  "preferences": [{
+	"name": "shrinkLarge",
+	"title": "Shrink Large Submissions",
+	"description": "Fit large images to my browser window on page load",
+	"type": "bool",
+	"value": true
+  },
+  {
+	"name": "prevDesc",
+	"title": "Preview Description",
+	"description": "Show the submission's description in the preview",
+	"type": "bool",
+	"value": true
+  },
+  {
+	"name": "prevTags",
+	"title": "Preview Tags",
+	"description": "Show the submission's tags in the preview",
+	"type": "bool",
+	"value": true
+  },
+  {
+	"name": "prevUser",
+	"title": "Preview User",
+	"description": "Show the submitter's avatar and username in the preview",
+	"type": "bool",
+	"value": true
+  },
+  {
+	"name": "prevImage",
+	"title": "Preview Image",
+	"description": "Show a teaser of the full image in the preview",
+	"type": "bool",
+	"value": true
+  },
+  {
+	"name": "prevDelay",
+	"title": "Preview Delay",
+	"description": "How long (in milliseconds) to wait before creating a preview",
+	"type": "integer",
+	"value": 1000
+  }
+  ]
 }
