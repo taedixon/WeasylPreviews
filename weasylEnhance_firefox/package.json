@@ -5,7 +5,7 @@
   "description": "Small tweaks to the Weasyl browsing experience",
   "author": "Taeler Dixon",
   "license": "MIT",
-  "version": "1.4",
+  "version": "1.5",
   "preferences": [{
 	"name": "shrinkLarge",
 	"title": "Shrink Large Submissions",
@@ -39,7 +39,7 @@
 	"title": "Preview Image",
 	"description": "Show a teaser of the full image in the preview",
 	"type": "bool",
-	"value": true
+	"value": false
   },
   {
 	"name": "prevDelay",
