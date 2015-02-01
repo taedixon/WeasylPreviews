@@ -4,17 +4,25 @@
 ***************************/
 var thumbfigs = document.getElementsByClassName("thumbnail");
 var prefs = self.options.prefs;
-var boxwidth = 300;
+var boxwidth = 330;
 var mousebuf = 40;
-if (prefs.prevImage) boxwidth = 330;
 
 function loadPreview(sub_id, floater, thumb) {
 	if (sub_id) {
 		jQuery.ajax({url:"/api/submissions/" + sub_id + "/view"}).done(function(response) {
 			var desco = response.description;
+
+			//this wad of nonsense replaces usericon images
+			//with the name of the  user
+			desco = desco.replace(/<a[^>]*href="\/([^"]*)"[^>]*class="user-icon".*?<\/a>/g, " $1 ")
 			//not ideal but they won't let me just throw the contents in as HTML
 			//so this chops out the HTML
 			desco = desco.replace(/<[^>]*>/g, " ");
+			//is doing all these regex replacements healthy? idk.
+			//probably a better way.
+			desco = desco.replace(/&amp;/g, "&");
+			desco = desco.replace(/&lt;/g, "<");
+			desco = desco.replace(/&gt;/g, ">");
 			
 			var split = desco.split(/\s+/);
 			if (split.length > 50) {
