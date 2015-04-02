@@ -6,7 +6,8 @@ function saveOptions() {
 		prevTags: form.prevTags.checked,
 		prevUser: form.prevUser.checked,
 		prevImage: form.prevImage.checked,
-		prevDelay: form.prevDelay.value
+		prevDelay: form.prevDelay.value,
+		showQueryBuilder: form.showQueryBuilder.checked
 	}, function() {
 		// Update status to let user know options were saved.
 		var status = document.getElementById('status');
@@ -24,6 +25,7 @@ function applyPrefs(items) {
 	form.prevUser.checked = items.prevUser;
 	form.prevImage.checked = items.prevImage;		
 	form.prevDelay.value = items.prevDelay;
+	form.showQueryBuilder.checked = items.showQueryBuilder;
 }
 		
 function getOptions() {
@@ -33,7 +35,8 @@ function getOptions() {
 		prevTags: true,
 		prevUser: true,
 		prevImage: true,
-		prevDelay: 1000
+		prevDelay: 1000,
+		showQueryBuilder: true,
 	}, applyPrefs);
 }
 
