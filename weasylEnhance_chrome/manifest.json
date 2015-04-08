@@ -17,6 +17,10 @@
 	{
 		"matches": ["https://www.weasyl.com/submission/*"] ,
 		"js": ["weasyl_moved_gallery_buttons.js", "weasyl_small_submission.js", "jquery-1.11.1.min.js"]
+	},
+	{
+		"matches": ["https://www.weasyl.com/character/*"] ,
+		"js": ["weasyl_small_submission.js", "jquery-1.11.1.min.js"]
 	}
   ],
   "options_page": "options.html",
