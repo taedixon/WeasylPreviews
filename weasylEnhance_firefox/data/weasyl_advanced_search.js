@@ -1,6 +1,6 @@
 /***************************
 	SEARCH_BUILDER
-	+ CHROME
+	+ FIREFOX
 ***************************/
 
 function init(prefs) {
