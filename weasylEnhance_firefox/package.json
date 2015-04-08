@@ -5,7 +5,7 @@
   "description": "Small tweaks to the Weasyl browsing experience",
   "author": "Taeler Dixon",
   "license": "MIT",
-  "version": "1.6",
+  "version": "1.7",
   "preferences": [{
 	"name": "shrinkLarge",
 	"title": "Shrink Large Submissions",
@@ -47,6 +47,13 @@
 	"description": "How long (in milliseconds) to wait before creating a preview",
 	"type": "integer",
 	"value": 1000
+  },
+  {
+	"name": "showQueryBuilder",
+	"title": "Show Search Builder",
+	"description": "Display a button for an advanced search form",
+	"type": "bool",
+	"value": true
   }
   ]
 }

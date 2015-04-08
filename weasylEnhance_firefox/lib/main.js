@@ -8,7 +8,7 @@ pageMod.PageMod({
   contentScriptWhen: "ready",
   contentStyleFile: self.data.url("preview_styles.css"),
   contentScriptFile: [self.data.url("jquery-1.11.1.min.js"),
-		self.data.url("weasyl_previewer.js")],
+		self.data.url("weasyl_previewer.js"), self.data.url("weasyl_advanced_search.js")],
 	contentScriptOptions: {"prefs": prefs}
 });
 
