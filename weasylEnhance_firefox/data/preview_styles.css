@@ -13,6 +13,8 @@
 #backupSearchButton .searchBuilder {margin-left:0px;top:0px;}
 #fullSearchButton .searchBuilder {margin-left:0px;top:0px;width:100%;}
 #backupSearchButton form input {background-image:none;padding:0 0.5em;}
-@media(min-width:63em) {
-	#headerSearchBtn ul{display:inline-block;position:relative;overflow:visible;}
-}
+@media(min-width:63em) {#headerSearchBtn ul{display:inline-block;position:relative;overflow:visible;}}
+
+.galleryNav li{display:inline-block;vertical-align:middle;float:none;height:1.25rem;height:20px;padding:0 0.7em;}
+.galleryNav li a {color:#9eb9bc}
+.galleryNav li a:hover{text-decoration:none;color:#DDD}

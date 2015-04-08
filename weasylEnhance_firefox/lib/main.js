@@ -16,6 +16,14 @@ pageMod.PageMod({
   include: "https://www.weasyl.com/submission/*",
   contentScriptWhen: "ready",
   contentScriptFile: [self.data.url("jquery-1.11.1.min.js"),
+		self.data.url("weasyl_small_submission.js"), self.data.url("weasyl_moved_gallery_buttons.js")],
+	contentScriptOptions: {"prefs": prefs}
+});
+
+pageMod.PageMod({
+  include: "https://www.weasyl.com/character/*",
+  contentScriptWhen: "ready",
+  contentScriptFile: [self.data.url("jquery-1.11.1.min.js"),
 		self.data.url("weasyl_small_submission.js")],
 	contentScriptOptions: {"prefs": prefs}
 });
