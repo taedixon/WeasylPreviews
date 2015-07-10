@@ -34,7 +34,7 @@ function getOptions() {
 		prevDesc: true,
 		prevTags: true,
 		prevUser: true,
-		prevImage: true,
+		prevImage: false,
 		prevDelay: 1000,
 		showQueryBuilder: true,
 	}, applyPrefs);

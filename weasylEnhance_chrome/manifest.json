@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Weasyl Enhancer",
-  "version": "1.7",
+  "version": "1.8",
   "icons": {
 	"128": "icon.png",
 	"48": "icon48.png"
@@ -16,7 +16,7 @@
 	
 	{
 		"matches": ["https://www.weasyl.com/submission/*"] ,
-		"js": ["weasyl_moved_gallery_buttons.js", "weasyl_small_submission.js", "jquery-1.11.1.min.js"]
+		"js": ["weasyl_small_submission.js", "jquery-1.11.1.min.js"]
 	},
 	{
 		"matches": ["https://www.weasyl.com/character/*"] ,

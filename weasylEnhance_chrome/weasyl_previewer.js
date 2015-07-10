@@ -86,15 +86,16 @@ function loadPreview(sub_id, floater, thumb) {
 			}
 		});
 		
-		thumb.getElementsByTagName("A")[0].getElementsByTagName("IMG")[0].setAttribute("title", "");
 	} else {
-		var link = thumb.getElementsByTagName("A")[0].getAttribute("href");
+		var link = thumb.getAttribute("href");
 		if (/\/character\//.test(link)) {
 			floater.appendChild(document.createTextNode("Can't preview Character submissions at this time, sorry."));
 		} else if (/\/journal\//.test(link)) {
 			floater.appendChild(document.createTextNode("Can't preview Journals at this time, sorry."));
 		} else {
-			floater.appendChild(document.createTextNode("I don't know what this is but I can't preview it anyway."));
+			console.log("Unknown thumb type!!! ");
+			floater.parentNode.removeChild(floater);
+			return;
 		}
 	}
 	floater.style.visibility = "visible";
@@ -102,13 +103,17 @@ function loadPreview(sub_id, floater, thumb) {
 
 function init(items) {
 	prefs = items;
-	var thumbfigs = document.getElementsByClassName("thumbnail");
+	var thumbfigs = document.getElementsByClassName("thumb-bounds");
 	var boxwidth = 330;
 	var mousebuf = 40;
 	Array.prototype.forEach.call(thumbfigs, function(elem, index, arr) {
-		var thumb = elem.getElementsByClassName("thumb")[0];
+		var thumb = elem;
 		if (!thumb) return;
-		var sub_id= thumb.getAttribute("data-id");
+		var sub_id = false;
+		var hfparts = thumb.getAttribute("href").split("/");
+		//at this time, only submissions have an API endpoint. So don't dick around with other stuff.
+		if (hfparts[1] == "submission")
+			var sub_id= hfparts[2];
 		var floater = document.createElement("DIV");
 		
 		thumb.loaded = false;
