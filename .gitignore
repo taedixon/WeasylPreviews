@@ -1,4 +1,5 @@
 Thumbs.db
 weasylEnhance_firefox/weasyl_enhancer.xpi
 weasylEnhance_chrome.zip
-*.pem*.pem*.pem*.pem
+*.pem
+*.crx
