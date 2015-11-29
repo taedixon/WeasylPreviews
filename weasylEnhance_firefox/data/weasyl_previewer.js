@@ -9,7 +9,8 @@ var mousebuf = 40;
 
 function loadPreview(sub_id, floater, thumb) {
 	if (sub_id) {
-		jQuery.ajax({url:"/api/submissions/" + sub_id + "/view"}).done(function(response) {
+		var csrf = encodeURIComponent(document.documentElement.getAttribute('data-csrf-token'));
+		jQuery.ajax({url:"/api/submissions/" + sub_id + "/view?token=" + csrf}).done(function(	response) {
 			var desco = response.description;
 
 			//this wad of nonsense replaces usericon images

@@ -5,7 +5,7 @@
   "description": "Small tweaks to the Weasyl browsing experience",
   "author": "Taeler Dixon",
   "license": "MIT",
-  "version": "1.8",
+  "version": "1.9",
   "preferences": [{
 	"name": "shrinkLarge",
 	"title": "Shrink Large Submissions",
