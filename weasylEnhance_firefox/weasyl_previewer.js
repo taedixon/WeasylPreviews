@@ -4,7 +4,7 @@
 ***************************/
 
 var prefs;
-var verbose = true;
+var verbose = false;
 
 function loadPreview(sub_id, floater, thumb) {
 	if (sub_id) {

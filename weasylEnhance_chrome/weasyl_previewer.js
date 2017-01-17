@@ -8,7 +8,10 @@ var prefs;
 function loadPreview(sub_id, floater, thumb) {
 	if (sub_id) {
 		var csrf = encodeURIComponent(document.documentElement.getAttribute('data-csrf-token'));
-		jQuery.ajax({url:"/api/submissions/" + sub_id + "/view?token=" + csrf}).done(function(response) {
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://www.weasyl.com/api/submissions/" + sub_id + "/view?token=" + csrf);
+		xhr.responseType = "json";
+		xhr.onreadystatechange = function(response) {
 			var desco = response.description;
 			
 			//this wad of nonsense replaces usericon images
@@ -85,7 +88,8 @@ function loadPreview(sub_id, floater, thumb) {
 				}			
 				floater.appendChild(tagdiv);
 			}
-		});
+		};
+		xhr.send();
 		
 	} else {
 		var link = thumb.getAttribute("href");

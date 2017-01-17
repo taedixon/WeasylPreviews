@@ -11,13 +11,11 @@ function expandImage() {
 	if (bttn.textContent.indexOf("+") >= 0) {
 		img.style.maxHeight = "";
 		bttn.textContent = "(-) Inpand";
+		art_view.scrollIntoView(true);
 	} else {
 		img.style.maxHeight =  window.innerHeight - 20 + "px";
 		bttn.textContent = "(+) Expand";
-		
-		$('html, body').animate({
-			scrollTop: $("#detail-art").offset().top
-		}, 500);
+		art_view.scrollIntoView(true);
 	}
 }
 
