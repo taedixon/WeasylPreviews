@@ -1,6 +1,6 @@
 /***************************
 	SEARCH_BUILDER
-	+ FIREFOX
+	+ CHROME
 ***************************/
 
 function init(prefs) {
@@ -129,4 +129,10 @@ function initSearch2(head, id) {
 	head.parentNode.insertBefore(ul, head.nextSibling.nextSibling.nextSibling); //this is dumb
 }
 
-init(self.options.prefs)
+function getOptions() {
+	browser.storage.local.get({
+		showQueryBuilder: true,
+	}, init);
+}
+
+getOptions();

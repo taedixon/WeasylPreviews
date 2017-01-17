@@ -115,6 +115,9 @@ function init(items) {
 		//at this time, only submissions have an API endpoint. So don't dick around with other stuff.
 		if (hfparts[1] == "submission")
 			var sub_id= hfparts[2];
+		// new canonical url format
+		else if (hfparts[2] == "submissions")
+			sub_id = hfparts[3];
 		var floater = document.createElement("DIV");
 		
 		thumb.loaded = false;

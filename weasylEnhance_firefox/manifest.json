@@ -10,7 +10,7 @@
   "content_scripts": [
 	{
 		"matches": ["https://www.weasyl.com/*"] ,
-		"js": ["weasyl_previewer.js", "jquery-1.11.1.min.js", "weasyl_advanced_search.js"],
+		"js": ["weasyl_previewer.js", "weasyl_advanced_search.js"],
 		"css": ["preview_styles.css"]
 	},
 	
@@ -18,10 +18,17 @@
 		"matches": ["https://www.weasyl.com/submission/*",
 					"https://www.weasyl.com/*/submissions/*",
 					"https://www.weasyl.com/character/*"] ,
-		"js": ["weasyl_small_submission.js", "jquery-1.11.1.min.js"]
+		"js": ["weasyl_small_submission.js"]
 	}
   ],
-  "options_page": "options.html",
+  "applications": {
+	"gecko": {
+		"id": "jid1-hv8AznkFQmhHdQ@jetpack"
+	}
+  },
+  "options_ui" : {
+	"page": "options.html"
+  },
   "permissions": [
 	"storage"
   ]

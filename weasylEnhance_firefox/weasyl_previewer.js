@@ -1,18 +1,30 @@
 /***************************
 	PREVIEW_THUMBS
-	+ FIREFOX
+	+ CHROME
 ***************************/
-var thumbfigs = document.getElementsByClassName("thumb-bounds");
-var prefs = self.options.prefs;
-var boxwidth = 330;
-var mousebuf = 40;
+
+var prefs;
+var verbose = true;
 
 function loadPreview(sub_id, floater, thumb) {
 	if (sub_id) {
+		if (verbose) 
+			console.log("Sending API req");
 		var csrf = encodeURIComponent(document.documentElement.getAttribute('data-csrf-token'));
-		jQuery.ajax({url:"/api/submissions/" + sub_id + "/view?token=" + csrf}).done(function(	response) {
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://www.weasyl.com/api/submissions/" + sub_id + "/view?token=" + csrf);
+		xhr.responseType = "json";
+		xhr.onreadystatechange = function() {
+			if (!(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200)) {
+				return;
+			}
+			var response = xhr.response;
+			if (verbose) {
+				console.log("Got ajax response");
+				console.log(response);
+			}			
 			var desco = response.description;
-
+			
 			//this wad of nonsense replaces usericon images
 			//with the name of the  user
 			desco = desco.replace(/<a[^>]*href="\/([^"]*)"[^>]*class="user-icon".*?<\/a>/g, " $1 ")
@@ -87,7 +99,8 @@ function loadPreview(sub_id, floater, thumb) {
 				}			
 				floater.appendChild(tagdiv);
 			}
-		});
+		};
+		xhr.send();
 		
 	} else {
 		var link = thumb.getAttribute("href");
@@ -104,44 +117,66 @@ function loadPreview(sub_id, floater, thumb) {
 	floater.style.visibility = "visible";
 }
 
-Array.prototype.forEach.call(thumbfigs, function(elem, index, arr) {
-	var thumb = elem;
-	if (!thumb) return;
-	var sub_id = false;
-	var hfparts = thumb.getAttribute("href").split("/");
-	//at this time, only submissions have an API endpoint. So don't dick around with other stuff.
-	if (hfparts[1] == "submission")
-		var sub_id= hfparts[2];
-	var floater = document.createElement("DIV");
-	
-	thumb.loaded = false;
-	
-	floater.setAttribute("class", "previewNox");
-	
-	document.body.appendChild(floater);
-	
-	thumb.addEventListener("mouseover", function(event) {
-		if (!thumb.loaded) {
-			thumb.preview_timeout = setTimeout(function() 
-				{loadPreview(sub_id, floater, thumb); thumb.loaded = true;}, prefs.prevDelay);
-		} else {
-			floater.style.visibility = "visible";
-		}
+function init(items) {
+	prefs = items;
+	var thumbfigs = document.getElementsByClassName("thumb-bounds");
+	var boxwidth = 330;
+	var mousebuf = 40;
+	Array.prototype.forEach.call(thumbfigs, function(elem, index, arr) {
+		var thumb = elem;
+		if (!thumb) return;
+		var sub_id = false;
+		var hfparts = thumb.getAttribute("href").split("/");
+		//at this time, only submissions have an API endpoint. So don't dick around with other stuff.
+		if (hfparts[1] == "submission")
+			var sub_id= hfparts[2];
+		// new canonical url format
+		else if (hfparts[2] == "submissions")
+			sub_id = hfparts[3];
+		var floater = document.createElement("DIV");
+		
+		thumb.loaded = false;
+		
+		floater.setAttribute("class", "previewNox");
+		
+		document.body.appendChild(floater);
+		
+		thumb.addEventListener("mouseover", function(event) {
+			if (!thumb.loaded) {
+				thumb.preview_timeout = setTimeout(function() 
+					{loadPreview(sub_id, floater, thumb); thumb.loaded = true;}, prefs.prevDelay);
+			} else {
+				floater.style.visibility = "visible";
+			}
+		});
+		
+		thumb.addEventListener("mouseout", function(event) {
+			if (!thumb.loaded) {
+				clearTimeout(thumb.preview_timeout);
+			}
+			floater.style.visibility = "hidden";
+		});
+		
+		thumb.addEventListener("mousemove", function(event) {
+			floater.style.top = (event.clientY-120) + "px";
+			if (event.clientX < (window.innerWidth - boxwidth - mousebuf)) {
+				floater.style.left = event.clientX + mousebuf + "px";
+			} else {
+				floater.style.left = (event.clientX - boxwidth - mousebuf) + "px";
+			}
+		});
 	});
-	
-	thumb.addEventListener("mouseout", function(event) {
-		if (!thumb.loaded) {
-			clearTimeout(thumb.preview_timeout);
-		}
-		floater.style.visibility = "hidden";
-	});
-	
-	thumb.addEventListener("mousemove", function(event) {
-		floater.style.top = (event.clientY-120) + "px";
-		if (event.clientX < (window.innerWidth - boxwidth - mousebuf)) {
-			floater.style.left = event.clientX + mousebuf + "px";
-		} else {
-			floater.style.left = (event.clientX - boxwidth - mousebuf) + "px";
-		}
-	});
-});
+}
+
+function getOptions() {
+	browser.storage.local.get({
+		shrinkLarge: true,
+		prevDesc: true,
+		prevTags: true,
+		prevUser: true,
+		prevImage: false,
+		prevDelay: 1000
+	}, init);
+}
+
+getOptions();

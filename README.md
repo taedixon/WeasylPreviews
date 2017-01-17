@@ -12,6 +12,15 @@ and a button has been added to allow you to expand and un-expand it.
 Released under MIT License http://opensource.org/licenses/MIT
 
 Changelog:
+V1.11
+- Migrate firefox addon to WebExtensions
+  - even though I still need to have two separate versions because of various inconsistencies
+- Remove jQuery dependencies from firefox version
+- add provisions for new canonical submission URL format
+
+V1.9
+- Update for CSRF tokens
+
 V1.8
 - Fixed for new Weasyl thumbnails
 
