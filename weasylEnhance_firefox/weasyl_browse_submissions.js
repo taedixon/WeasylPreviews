@@ -17,7 +17,7 @@ const add_submissions_link = () => {
 }
 
 browser.storage.local.get({
-		showSubmissionsLink: true,
+		showSubmissionsLink: false,
 	}, function(items) {
 		if (items.showSubmissionsLink) {
 			add_submissions_link();
