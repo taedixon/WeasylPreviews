@@ -10,10 +10,12 @@ function expandImage() {
 	var img = art_view.getElementsByTagName("A")[0].getElementsByTagName("IMG")[0];
 	if (bttn.textContent.indexOf("+") >= 0) {
 		img.style.maxHeight = "";
+		img.style.width = "";
 		bttn.textContent = "(-) Inpand";
 		art_view.scrollIntoView(true);
 	} else {
 		img.style.maxHeight =  window.innerHeight - 20 + "px";
+		img.style.width = "auto";
 		bttn.textContent = "(+) Expand";
 		art_view.scrollIntoView(true);
 	}
@@ -26,6 +28,7 @@ function init(shrink) {
 		var img = art_view.getElementsByTagName("A")[0].getElementsByTagName("IMG")[0];
 		if (shrink) {
 			img.style.maxHeight = window.innerHeight - 20 + "px";
+			img.style.width = "auto";
 		}
 		
 		var resize_btn = document.createElement("LI");
