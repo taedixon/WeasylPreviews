@@ -1,39 +1,53 @@
 {
-  "manifest_version": 2,
-  "name": "Weasyl Enhancer",
-  "version": "1.13",
-  "icons": {
-	"128": "icon.png",
-	"48": "icon48.png"
-  },
-  "description": "Small tweaks to the Weasyl browsing experience",
-  "content_scripts": [
-	{
-		"matches": ["https://www.weasyl.com/*"] ,
-		"js": ["weasyl_previewer.js", "weasyl_advanced_search.js"],
-		"css": ["preview_styles.css"]
+	"manifest_version": 2,
+	"name": "Weasyl Enhancer",
+	"version": "1.14",
+	"icons": {
+		"128": "icon.png",
+		"48": "icon48.png"
 	},
-	
-	{
-		"matches": ["https://www.weasyl.com/submission/*",
-					"https://www.weasyl.com/*/submissions/*",
-					"https://www.weasyl.com/character/*"] ,
-		"js": ["weasyl_small_submission.js"]
+	"description": "Small tweaks to the Weasyl browsing experience",
+	"content_scripts": [
+		{
+			"matches": [
+				"https://www.weasyl.com/*"
+			],
+			"js": [
+				"weasyl_previewer.js",
+				"weasyl_advanced_search.js"
+			],
+			"css": [
+				"preview_styles.css"
+			]
+		},
+		{
+			"matches": [
+				"https://www.weasyl.com/submission/*",
+				"https://www.weasyl.com/*/submissions/*",
+				"https://www.weasyl.com/character/*"
+			],
+			"js": [
+				"weasyl_small_submission.js"
+			]
+		},
+		{
+			"matches": [
+				"https://www.weasyl.com/"
+			],
+			"js": [
+				"weasyl_browse_submissions.js"
+			]
+		}
+	],
+	"applications": {
+		"gecko": {
+			"id": "jid1-hv8AznkFQmhHdQ@jetpack"
+		}
 	},
-	{
-		"matches": ["https://www.weasyl.com/"],
-		"js": ["weasyl_browse_submissions.js"]
-	}
-  ],
-  "applications": {
-	"gecko": {
-		"id": "jid1-hv8AznkFQmhHdQ@jetpack"
-	}
-  },
-  "options_ui" : {
-	"page": "options.html"
-  },
-  "permissions": [
-	"storage"
-  ]
+	"options_ui": {
+		"page": "options.html"
+	},
+	"permissions": [
+		"storage"
+	]
 }
