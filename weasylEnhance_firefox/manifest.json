@@ -39,9 +39,12 @@
 			]
 		}
 	],
-	"applications": {
+	"browser_specific_settings": {
 		"gecko": {
-			"id": "jid1-hv8AznkFQmhHdQ@jetpack"
+			"id": "jid1-hv8AznkFQmhHdQ@jetpack",
+			"data_collection_permissions": {
+				"required": ["none"]
+			}
 		}
 	},
 	"options_ui": {
